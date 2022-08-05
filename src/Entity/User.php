@@ -28,6 +28,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+    
+    #[Assert\NotBlank(groups: ["public:write"])]
+    #[Assert\Length(min: 8, groups: ["public:write"])]
+    #[SerializedName("password")]
+    #[Groups(["public:write"])]
+    #[ApiProperty(["attributes" => [
+        "openapi_context" => [
+            "type" => "string",
+            "example"=> "apassword"
+        ]
+    ]])]
+    protected ?string $plainPassword = null;
+    
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
